@@ -6,7 +6,7 @@ limit=$(sysctl -n vm.max_map_count)
 
 echo "# HELP node_memory_map_count Memory maps limit"
 echo "# TYPE node_memory_map_count gauge"
-echo "node_memory_map_count{} ${limit}"
+echo "node_memory_map_limit{} ${limit}"
 
 # Elasticsearch process mmap count
 
@@ -16,6 +16,6 @@ echo "# TYPE process_memory_map_count gauge"
 for pid in $(pgrep -f Elastic); do
   if [ -r "/proc/${pid}/maps" ]; then
     count=$(wc -l < /proc/${pid}/maps)
-    echo "process_memory_map_count{pid=\"${pid}\"} ${count}"
+    echo "elasticsearch_memory_map_count{pid=\"${pid}\"} ${count}"
   fi
 done
